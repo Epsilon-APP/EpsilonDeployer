@@ -1,0 +1,21 @@
+name: 'Epsilon Deployer'
+description: 'Epsilon deployement CI/CD'
+inputs:
+  host:
+    description: 'Host input'
+    required: true
+  secret:
+    description: 'Secret input'
+    required: true
+  type:
+    description: 'Type input'
+    required: true
+  jar:
+    description: 'Jar input'
+    required: true
+  destination:
+    description: 'Destination input'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
