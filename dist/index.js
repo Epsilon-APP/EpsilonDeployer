@@ -7819,6 +7819,7 @@ const core = __nccwpck_require__(115);
 const fs = __nccwpck_require__(7147)
 const path = __nccwpck_require__(1017)
 
+const https = __nccwpck_require__(5687)
 const axios = __nccwpck_require__(893)
 
 try {
@@ -7829,22 +7830,27 @@ try {
   const jar = core.getInput('jar')
   const destination = core.getInput('destination')
 
-  pushFile(host, type, destination, jar, secret)
+  const rejectTLS = core.getInput('rejectTLS')
+
+  pushFile(host, type, destination, jar, secret, rejectTLS)
 } catch (error) {
   core.setFailed(error.message)
 }
 
-async function pushFile(host, type, destination, file, secret) {
+async function pushFile(host, type, destination, file, secret, rejectTLS) {
   var FormData = __nccwpck_require__(605);
 
   const formData = new FormData()
   formData.append('upload', fs.readFileSync(file), path.basename(file))
 
-  await axios.post(`${host}/${type}/${destination}/plugins/push`, formData, {
+  await axios.post(`https://${host}/${type}/${destination}/plugins/push`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
       'Proxy-Authorization': `Basic ${secret}`
-    }
+    },
+    httpsAgent: new https.Agent({  
+      rejectUnauthorized: rejectTLS
+    })
   })
 }
 })();

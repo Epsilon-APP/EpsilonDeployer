@@ -16,6 +16,9 @@ inputs:
   destination:
     description: 'Destination input'
     required: true
+  rejectTLS:
+    description: 'RejectTLS input'
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'
