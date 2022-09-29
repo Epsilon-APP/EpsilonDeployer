@@ -27,7 +27,7 @@ async function pushFile(host, type, destination, file, secret) {
   await axios.post(`${host}/${type}/${destination}/plugins/push`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
-      'Proxy-Authorization': secret
+      'Proxy-Authorization': `Basic ${secret}`
     }
   })
 }
