@@ -7850,7 +7850,9 @@ async function pushFile(host, type, destination, file, secret, rejectTLS) {
     },
     httpsAgent: new https.Agent({  
       rejectUnauthorized: rejectTLS
-    })
+    }),
+    maxContentLength: Infinity,
+    maxBodyLength: Infinity
   })
 }
 })();
